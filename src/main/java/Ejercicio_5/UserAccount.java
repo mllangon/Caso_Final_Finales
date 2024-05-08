@@ -35,6 +35,9 @@ public class UserAccount {
     }
 
     public void tweet(Tweet tweet) {
+        if (tweet.getContent().length() > 140) {
+            throw new IllegalArgumentException("Content exceeds the maximum length of 140 characters");
+        }
         this.tweets.add(tweet);
         for (UserAccount follower : followers) {
             follower.timeline.add(tweet);
