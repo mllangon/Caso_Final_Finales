@@ -3,6 +3,7 @@ package Ejercicio_5;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class UserAccountGUI extends JFrame {
@@ -11,10 +12,14 @@ public class UserAccountGUI extends JFrame {
     private JTextField emailField;
     private JTextField tweetField;
     private JTextField followField;
+    private JTextField dmField;
+    private JTextField rtField;
     private JTextArea outputArea;
     private JButton createButton;
     private JButton tweetButton;
     private JButton followButton;
+    private JButton dmButton;
+    private JButton rtButton;
     private JButton backButton;
     private JPanel cards;
 
@@ -38,7 +43,7 @@ public class UserAccountGUI extends JFrame {
         createButton.addActionListener(this::createAccount);
         card1.add(createButton);
 
-        // Formulario para tweetear y seguir a otro usuario
+        // Formulario para tweetear, seguir a otro usuario, enviar un mensaje directo y retweetear
         JPanel card2 = new JPanel(new FlowLayout());
 
         card2.add(new JLabel("Tweet:"));
@@ -56,6 +61,22 @@ public class UserAccountGUI extends JFrame {
         followButton = new JButton("Follow");
         followButton.addActionListener(this::follow);
         card2.add(followButton);
+
+        card2.add(new JLabel("Direct Message (alias):"));
+        dmField = new JTextField(20);
+        card2.add(dmField);
+
+        dmButton = new JButton("Send DM");
+        dmButton.addActionListener(this::sendDM);
+        card2.add(dmButton);
+
+        card2.add(new JLabel("Retweet (tweet content):"));
+        rtField = new JTextField(20);
+        card2.add(rtField);
+
+        rtButton = new JButton("Retweet");
+        rtButton.addActionListener(this::retweet);
+        card2.add(rtButton);
 
         // Botón para volver a la pantalla de creación de cuenta
         backButton = new JButton("Back");
@@ -95,7 +116,7 @@ public class UserAccountGUI extends JFrame {
     private void tweet(ActionEvent e) {
         if (currentUser != null && !tweetField.getText().trim().isEmpty()) {
             String tweetContent = tweetField.getText().trim();
-            Tweet tweet = new Tweet(tweetContent);
+            Tweet tweet = new Tweet(tweetContent, LocalDateTime.now(), currentUser);
             currentUser.tweet(tweet);
             outputArea.append("Tweeted: " + tweetContent + "\n");
         } else {
@@ -113,6 +134,32 @@ public class UserAccountGUI extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "User not found or invalid operation.");
             }
+        }
+    }
+
+    private void sendDM(ActionEvent e) {
+        if (currentUser != null) {
+            String dmAlias = dmField.getText().trim();
+            UserAccount userToDM = allUsers.get(dmAlias);
+            if (userToDM != null && !dmAlias.equals(currentUser.getAlias())) {
+                DirectMessage dm = new DirectMessage("DM content", LocalDateTime.now(), currentUser, userToDM);
+                currentUser.tweet(dm);
+                outputArea.append("Sent DM to: " + dmAlias + "\n");
+            } else {
+                JOptionPane.showMessageDialog(this, "User not found or invalid operation.");
+            }
+        }
+    }
+
+    private void retweet(ActionEvent e) {
+        if (currentUser != null && !rtField.getText().trim().isEmpty()) {
+            String rtContent = rtField.getText().trim();
+            Tweet originalTweet = new Tweet(rtContent, LocalDateTime.now(), currentUser);
+            Retweet rt = new Retweet("RT: " + rtContent, LocalDateTime.now(), currentUser, originalTweet);
+            currentUser.tweet(rt);
+            outputArea.append("Retweeted: " + rtContent + "\n");
+        } else {
+            JOptionPane.showMessageDialog(this, "No content to retweet or no user logged in.");
         }
     }
 
