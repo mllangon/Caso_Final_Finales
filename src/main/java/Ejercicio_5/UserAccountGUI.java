@@ -18,7 +18,6 @@ public class UserAccountGUI extends JFrame {
     private JButton backButton;
     private JPanel cards;
 
-    // Simulamos una base de datos de usuarios
     private HashMap<String, UserAccount> allUsers = new HashMap<>();
 
     public UserAccountGUI() {
