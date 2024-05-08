@@ -15,6 +15,7 @@ public class UserAccountGUI extends JFrame {
     private JButton createButton;
     private JButton tweetButton;
     private JButton followButton;
+    private JButton backButton;
     private JPanel cards;
 
     // Simulamos una base de datos de usuarios
@@ -56,6 +57,11 @@ public class UserAccountGUI extends JFrame {
         followButton = new JButton("Follow");
         followButton.addActionListener(this::follow);
         card2.add(followButton);
+
+        // Botón para volver a la pantalla de creación de cuenta
+        backButton = new JButton("Back");
+        backButton.addActionListener(e -> ((CardLayout) cards.getLayout()).show(cards, "Create Account"));
+        card2.add(backButton);
 
         // Área de texto para salida de mensajes
         outputArea = new JTextArea(5, 30);
