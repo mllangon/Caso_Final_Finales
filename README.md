@@ -21,7 +21,9 @@ b) Falso (El método de inserción no selecciona elementos para insertar en la p
 
 
 ##Ejercicio 2:
+
 ###1)
+
 A)
 Análisis: Esta opción tiene una complejidad computacional lineal, lo que significa que el tiempo de ejecución aumentará linealmente con el tamaño de los datos de entrada. Sin embargo, es muy eficiente en términos de uso de memoria, utilizando un espacio constante S(1).
 
@@ -38,25 +40,35 @@ Análisis: Ofrece una excelente eficiencia tanto en tiempo de ejecución como en
 Justificación: Esta opción es un buen compromiso entre tiempo de ejecución y uso de memoria, especialmente adecuada para sistemas donde ambos recursos son limitados. La complejidad logarítmica en ambos aspectos hace que esta alternativa sea sustentable y eficiente para el entorno de dispositivos portables en telemedicina.
 
 Conclusion:
+
 Considerando las limitaciones de memoria y la necesidad de una ejecución eficiente, la alternativa c) parece ser la más equilibrada. Ofrece un muy buen compromiso entre la eficiencia computacional y el uso de memoria, lo cual es crucial en dispositivos con memoria extremadamente limitada y con requisitos de procesamiento en tiempo real. Esta opción asegura que el dispositivo pueda manejar los datos de entrada de manera eficiente sin importar sus recursos de memoria.
 
 ###2)
+
 Tabla Hash 
+
 Las tablas hash están diseñadas para el acceso rápido a los datos. Utilizan una función hash que toma una clave y devuelve un índice en un arreglo, donde se almacena el valor correspondiente. Las principales características y operaciones de las tablas hash son: Acceso, Inserción y Eliminación: En condiciones ideales, estas operaciones tienen un tiempo de complejidad de O(1). Sin embargo, la eficiencia depende fuertemente de la calidad de la función hash y del manejo de colisiones. Se pueden formar colisiones que pueden degradar el rendimiento a O(n) en el peor de los casos (si se utiliza encadenamiento para manejar colisiones). Funciona bien con elementos que necesitan ser accesados de manera rápida y directa. Sin embargo, pueden consumir más memoria, especialmente si la densidad de datos es baja en relación con el espacio reservado. Las tablas hash no mantienen ningún orden de las claves o valores almacenados. 
 
 Árbol (Específicamente Árbol Binario de Búsqueda - ABB) 
+
 Los árboles, en particular los árboles binarios de búsqueda, son estructuras de datos que organizan los elementos en nodos conectados, donde cada nodo tiene un elemento que es mayor o menor que el de sus nodos hijo de acuerdo a unas reglas específicas: Acceso, Inserción y Eliminación: Estas operaciones tienen un tiempo de complejidad promedio de O(logn), suponiendo que el árbol está balanceado. Si el árbol se desbalancea, estas operaciones pueden degradarse a O(n). Los árboles pueden necesitar operaciones de re-balanceo (como rotaciones en AVL o árboles rojo-negros) para mantener su eficiencia. Mantienen un orden intrínseco, lo cual facilita operaciones como búsqueda del mínimo/máximo, sucesor/predecesor y rangos de búsqueda. 
 
 Cuándo utilizar cada estructura 
+
 Tabla Hash:
+
 Cuándo: Cuando necesitas acceso, inserción y eliminación extremadamente rápidos y el orden de los elementos no es importante.
 Por qué: Es ideal para implementaciones de conjuntos o mapas donde el acceso directo es más crítico que el ordenamiento, como cachés, tablas de búsqueda rápida, y estructuras de datos donde las colisiones son mínimas o manejables.
+
 Árbol:
+
 Cuándo: Cuando es importante mantener un orden de los elementos y se necesitan operaciones como búsqueda de rangos o sucesores/predecesores.
 Por qué: Es mejor en escenarios donde la integridad y el orden de los datos son críticos, como en bases de datos, sistemas de archivos, y cuando se necesitan operaciones de búsqueda más complejas.
 
 ###3)
+
 Pila (Stack)
+
 Una pila es una estructura de datos lineal que sigue el principio de "Last In, First Out" (LIFO), lo que significa que el último elemento que se añade a la pila es el primero en ser eliminado. Esto se implementa usando las operaciones:
 
 Push: Añadir un elemento al tope de la pila.
@@ -90,6 +102,7 @@ Elige una pila cuando necesites trabajar con los elementos en el orden inverso a
 Elige una cola cuando el orden de los elementos es importante y necesitas procesarlos en el mismo orden en que fueron recibidos. Esto es crítico en procesamientos secuenciales donde el orden de los eventos no debe alterarse.
 
 ###4)
+
 Considérase el conjunto inicial: 50, 20, 84, 13, 22, 16, 89, 85.
 
 Empiezas con el primer par (50 ya está en su lugar).
@@ -117,6 +130,7 @@ por lo que para valores de n mayores a 8 A es más eficiente que B.
 
 
 ##Ejercicio 3:
+
 a) El codigo de la imagen no llegaria a compilar ya que a b se le declara como a un balor negativo en la funcion recursva y el codigo no tiene ninguna condicion para manejar valores negativos en b, ademas esta la condicion (b==0) que nunca se cumplira y se llamara contínuamente a si misma con valores cada vez mas negativos. el codigo arreglado esta adjunto en el paquete "Ejercicio_3"
 
 b) El cálculo que está haciendo la función recursive es el de la potencia de un número a elevado a b. 
