@@ -1,4 +1,4 @@
-### Caso_Final_Finales
+# Caso_Final_Finales
 Mario Llansó--> https://github.com/mllangon/Caso_Final_Finales.git
 
 
@@ -21,7 +21,7 @@ b) Falso (El método de inserción no selecciona elementos para insertar en la p
 
 
 ##Ejercicio 2:
-#1)
+###1)
 A)
 Análisis: Esta opción tiene una complejidad computacional lineal, lo que significa que el tiempo de ejecución aumentará linealmente con el tamaño de los datos de entrada. Sin embargo, es muy eficiente en términos de uso de memoria, utilizando un espacio constante S(1).
 
@@ -40,7 +40,7 @@ Justificación: Esta opción es un buen compromiso entre tiempo de ejecución y 
 Conclusion:
 Considerando las limitaciones de memoria y la necesidad de una ejecución eficiente, la alternativa c) parece ser la más equilibrada. Ofrece un muy buen compromiso entre la eficiencia computacional y el uso de memoria, lo cual es crucial en dispositivos con memoria extremadamente limitada y con requisitos de procesamiento en tiempo real. Esta opción asegura que el dispositivo pueda manejar los datos de entrada de manera eficiente sin importar sus recursos de memoria.
 
-#2)
+###2)
 Tabla Hash 
 Las tablas hash están diseñadas para el acceso rápido a los datos. Utilizan una función hash que toma una clave y devuelve un índice en un arreglo, donde se almacena el valor correspondiente. Las principales características y operaciones de las tablas hash son: Acceso, Inserción y Eliminación: En condiciones ideales, estas operaciones tienen un tiempo de complejidad de O(1). Sin embargo, la eficiencia depende fuertemente de la calidad de la función hash y del manejo de colisiones. Se pueden formar colisiones que pueden degradar el rendimiento a O(n) en el peor de los casos (si se utiliza encadenamiento para manejar colisiones). Funciona bien con elementos que necesitan ser accesados de manera rápida y directa. Sin embargo, pueden consumir más memoria, especialmente si la densidad de datos es baja en relación con el espacio reservado. Las tablas hash no mantienen ningún orden de las claves o valores almacenados. 
 
@@ -55,7 +55,7 @@ Por qué: Es ideal para implementaciones de conjuntos o mapas donde el acceso di
 Cuándo: Cuando es importante mantener un orden de los elementos y se necesitan operaciones como búsqueda de rangos o sucesores/predecesores.
 Por qué: Es mejor en escenarios donde la integridad y el orden de los datos son críticos, como en bases de datos, sistemas de archivos, y cuando se necesitan operaciones de búsqueda más complejas.
 
-3)
+###3)
 Pila (Stack)
 Una pila es una estructura de datos lineal que sigue el principio de "Last In, First Out" (LIFO), lo que significa que el último elemento que se añade a la pila es el primero en ser eliminado. Esto se implementa usando las operaciones:
 
@@ -89,7 +89,7 @@ Elige una pila cuando necesites trabajar con los elementos en el orden inverso a
 
 Elige una cola cuando el orden de los elementos es importante y necesitas procesarlos en el mismo orden en que fueron recibidos. Esto es crítico en procesamientos secuenciales donde el orden de los eventos no debe alterarse.
 
-4)
+###4)
 Considérase el conjunto inicial: 50, 20, 84, 13, 22, 16, 89, 85.
 
 Empiezas con el primer par (50 ya está en su lugar).
@@ -102,7 +102,7 @@ Al final, la lista ordenada será: 13, 16, 20, 22, 50, 84, 85, 89.
 Este método es simple y efectivo para listas pequeñas o casi ordenadas, aunque puede ser lento para listas grandes debido a su naturaleza de comparación repetitiva.
 
 
-5)
+###5)
 
 Para determinar a partir de qué tamaño de entrada n la función A es más eficiente que B, necesitas encontrar el punto en el que A realiza menos operaciones que B.
 
@@ -127,12 +127,12 @@ En el caso recursivo (else), se multiplica a por el resultado de recursive(a, b-
 
 ##Ejercicio 4:
 
-#Tipo de recursividad:
+####Tipo de recursividad:
 
 la recursividad empleada en este ejercicio es lineal, la funcion se llama a sí misma y no esta dentro de ningún bucle.
 
 
-#Complejidad computacional:
+###Complejidad computacional:
 
 La complejidad computacional del algoritmo de este ejercicio es O(n), donde n es el número de dígitos en el número. Esto es porque cada llamada procesa un dígito del número (dividiendo el número por 10), y por lo tanto, el número de llamadas recursivas es proporcional al número de dígitos en el número original.
 
