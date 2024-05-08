@@ -12,8 +12,10 @@ public class UserAccountGUI extends JFrame {
     private JTextField emailField;
     private JTextField tweetField;
     private JTextField followField;
-    private JTextField dmField;
-    private JTextField rtField;
+    private JTextField dmAliasField;
+    private JTextField dmContentField;
+    private JTextField rtAliasField;
+    private JComboBox<Tweet> rtComboBox;
     private JTextArea outputArea;
     private JButton createButton;
     private JButton tweetButton;
@@ -63,16 +65,33 @@ public class UserAccountGUI extends JFrame {
         card2.add(followButton);
 
         card2.add(new JLabel("Direct Message (alias):"));
-        dmField = new JTextField(20);
-        card2.add(dmField);
+        dmAliasField = new JTextField(20);
+        card2.add(dmAliasField);
+
+        card2.add(new JLabel("Direct Message (content):"));
+        dmContentField = new JTextField(20);
+        card2.add(dmContentField);
 
         dmButton = new JButton("Send DM");
         dmButton.addActionListener(this::sendDM);
         card2.add(dmButton);
 
-        card2.add(new JLabel("Retweet (tweet content):"));
-        rtField = new JTextField(20);
-        card2.add(rtField);
+        card2.add(new JLabel("Retweet (alias):"));
+        rtAliasField = new JTextField(20);
+        card2.add(rtAliasField);
+
+        rtComboBox = new JComboBox<>();
+        rtComboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Tweet) {
+                    setText(((Tweet) value).getContent());
+                }
+                return this;
+            }
+        });
+        card2.add(rtComboBox);
 
         rtButton = new JButton("Retweet");
         rtButton.addActionListener(this::retweet);
@@ -119,6 +138,7 @@ public class UserAccountGUI extends JFrame {
             Tweet tweet = new Tweet(tweetContent, LocalDateTime.now(), currentUser);
             currentUser.tweet(tweet);
             outputArea.append("Tweeted: " + tweetContent + "\n");
+            rtComboBox.addItem(tweet);
         } else {
             JOptionPane.showMessageDialog(this, "No content to tweet or no user logged in.");
         }
@@ -139,10 +159,11 @@ public class UserAccountGUI extends JFrame {
 
     private void sendDM(ActionEvent e) {
         if (currentUser != null) {
-            String dmAlias = dmField.getText().trim();
+            String dmAlias = dmAliasField.getText().trim();
+            String dmContent = dmContentField.getText().trim();
             UserAccount userToDM = allUsers.get(dmAlias);
             if (userToDM != null && !dmAlias.equals(currentUser.getAlias())) {
-                DirectMessage dm = new DirectMessage("DM content", LocalDateTime.now(), currentUser, userToDM);
+                DirectMessage dm = new DirectMessage(dmContent, LocalDateTime.now(), currentUser, userToDM);
                 currentUser.tweet(dm);
                 outputArea.append("Sent DM to: " + dmAlias + "\n");
             } else {
@@ -152,14 +173,13 @@ public class UserAccountGUI extends JFrame {
     }
 
     private void retweet(ActionEvent e) {
-        if (currentUser != null && !rtField.getText().trim().isEmpty()) {
-            String rtContent = rtField.getText().trim();
-            Tweet originalTweet = new Tweet(rtContent, LocalDateTime.now(), currentUser);
-            Retweet rt = new Retweet("RT: " + rtContent, LocalDateTime.now(), currentUser, originalTweet);
+        if (currentUser != null && rtComboBox.getSelectedItem() != null) {
+            Tweet originalTweet = (Tweet) rtComboBox.getSelectedItem();
+            Retweet rt = new Retweet("RT: " + originalTweet.getContent(), LocalDateTime.now(), currentUser, originalTweet);
             currentUser.tweet(rt);
-            outputArea.append("Retweeted: " + rtContent + "\n");
+            outputArea.append("Retweeted: " + originalTweet.getContent() + "\n");
         } else {
-            JOptionPane.showMessageDialog(this, "No content to retweet or no user logged in.");
+            JOptionPane.showMessageDialog(this, "No tweet to retweet or no user logged in.");
         }
     }
 
