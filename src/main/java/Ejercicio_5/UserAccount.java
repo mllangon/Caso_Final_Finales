@@ -33,6 +33,18 @@ public class UserAccount {
         return password;
     }
 
+    public HashSet<UserAccount> getFollowing() {
+        return following;
+    }
+
+    public HashSet<UserAccount> getFollowers() {
+        return followers;
+    }
+
+    public ArrayList<Tweet> getTweets() {
+        return tweets;
+    }
+
     public void follow(UserAccount user) {
         if (user != null && !this.following.contains(user)) {
             this.following.add(user);
