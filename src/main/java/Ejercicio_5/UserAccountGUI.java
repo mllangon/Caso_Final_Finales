@@ -26,6 +26,8 @@ public class UserAccountGUI extends JFrame {
     private JButton dmButton;
     private JButton rtButton;
     private JButton backButton;
+    private JButton loginButtonStart;
+    private JButton createButtonStart;
     private JPanel cards;
 
     private HashMap<String, UserAccount> allUsers = new HashMap<>();
@@ -33,6 +35,27 @@ public class UserAccountGUI extends JFrame {
     public UserAccountGUI() {
         super("User Account Manager");
         setLayout(new BorderLayout());
+
+        JPanel card0 = new JPanel(new BorderLayout()) {
+        };
+
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        buttonPanel.setOpaque(false);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        loginButtonStart = new JButton("Iniciar sesión");
+        loginButtonStart.addActionListener(e -> ((CardLayout) cards.getLayout()).show(cards, "Create Account"));
+        buttonPanel.add(loginButtonStart, gbc);
+
+        createButtonStart = new JButton("Crear cuenta");
+        createButtonStart.addActionListener(e -> ((CardLayout) cards.getLayout()).show(cards, "User Actions"));
+        buttonPanel.add(createButtonStart, gbc);
+
+        card0.add(buttonPanel, BorderLayout.CENTER);
+
+
 
         // Formulario para crear una cuenta
         JPanel card1 = new JPanel(new FlowLayout());
@@ -120,6 +143,7 @@ public class UserAccountGUI extends JFrame {
 
         // Panel principal con CardLayout
         cards = new JPanel(new CardLayout());
+        cards.add(card0, "Start");
         cards.add(card1, "Create Account");
         cards.add(card2, "User Actions");
 
