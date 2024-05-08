@@ -3,12 +3,14 @@ package Ejercicio_5;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class UserAccountGUI extends JFrame {
     private UserAccount currentUser;
     private JTextField aliasField;
+    private JPasswordField passwordField;
     private JTextField emailField;
     private JTextField tweetField;
     private JTextField followField;
@@ -18,6 +20,7 @@ public class UserAccountGUI extends JFrame {
     private JComboBox<Tweet> rtComboBox;
     private JTextArea outputArea;
     private JButton createButton;
+    private JButton loginButton;
     private JButton tweetButton;
     private JButton followButton;
     private JButton dmButton;
@@ -37,6 +40,10 @@ public class UserAccountGUI extends JFrame {
         aliasField = new JTextField(20);
         card1.add(aliasField);
 
+        card1.add(new JLabel("Password:"));
+        passwordField = new JPasswordField(20);
+        card1.add(passwordField);
+
         card1.add(new JLabel("Email:"));
         emailField = new JTextField(20);
         card1.add(emailField);
@@ -44,6 +51,10 @@ public class UserAccountGUI extends JFrame {
         createButton = new JButton("Create Account");
         createButton.addActionListener(this::createAccount);
         card1.add(createButton);
+
+        loginButton = new JButton("Login");
+        loginButton.addActionListener(this::login);
+        card1.add(loginButton);
 
         // Formulario para tweetear, seguir a otro usuario, enviar un mensaje directo y retweetear
         JPanel card2 = new JPanel(new FlowLayout());
@@ -121,14 +132,51 @@ public class UserAccountGUI extends JFrame {
 
     private void createAccount(ActionEvent e) {
         String alias = aliasField.getText().trim();
+        String password = new String(passwordField.getPassword());
         String email = emailField.getText().trim();
-        if (!alias.isEmpty() && !email.isEmpty()) {
+        if (!alias.isEmpty() && !password.isEmpty() && !email.isEmpty()) {
             Email emailObj = new Email(email);
-            currentUser = new UserAccount(alias, emailObj);
+            currentUser = new UserAccount(alias, emailObj, password);
+            allUsers.put(alias, currentUser);
+            ((CardLayout) cards.getLayout()).show(cards, "User Actions");
+            storeUserInFile(currentUser);
+        } else {
+            JOptionPane.showMessageDialog(this, "Alias, password and email cannot be empty.");
+        }
+    }
+    private void login(ActionEvent e) {
+        String alias = aliasField.getText().trim();
+        String password = new String(passwordField.getPassword());
+        currentUser = loadUserFromFile(alias, password);
+        if (currentUser != null) {
             allUsers.put(alias, currentUser);
             ((CardLayout) cards.getLayout()).show(cards, "User Actions");
         } else {
-            JOptionPane.showMessageDialog(this, "Alias and email cannot be empty.");
+            JOptionPane.showMessageDialog(this, "Invalid alias or password.");
+        }
+    }
+
+    private UserAccount loadUserFromFile(String alias, String password) {
+        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals(alias) && parts[2].equals(password)) {
+                    Email email = new Email(parts[1]);
+                    return new UserAccount(alias, email, password);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void storeUserInFile(UserAccount user) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("users.txt", true)))) {
+            out.println(user.getAlias() + "," + user.getEmail().getEmail() + "," + user.getPassword());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

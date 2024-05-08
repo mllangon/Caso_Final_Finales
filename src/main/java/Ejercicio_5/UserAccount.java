@@ -6,17 +6,19 @@ import java.util.HashSet;
 public class UserAccount {
     private String alias;
     private Email email;
+    private String password;
     private ArrayList<Tweet> tweets;
     private ArrayList<Tweet> timeline;
     private HashSet<UserAccount> followers;
     private HashSet<UserAccount> following;
 
-    public UserAccount(String alias, Email email) {
+    public UserAccount(String alias, Email email, String password) {
         if (!Utils.isValidAlias(alias) || !Utils.isValidEmail(email.getEmail())) {
             throw new IllegalArgumentException("Invalid alias or email");
         }
         this.alias = alias;
         this.email = email;
+        this.password = password;
         this.tweets = new ArrayList<>();
         this.timeline = new ArrayList<>();
         this.followers = new HashSet<>();
@@ -25,6 +27,10 @@ public class UserAccount {
 
     public String getAlias() {
         return alias;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void follow(UserAccount user) {
@@ -51,6 +57,11 @@ public class UserAccount {
                 ", email=" + email.getEmail() +
                 '}';
     }
+
+    public Email getEmail() {
+        return email;
+    }
+
 }
 
 class Utils {
